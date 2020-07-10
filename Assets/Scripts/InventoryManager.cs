@@ -6,8 +6,6 @@ using System.Xml.Schema;
 
 public class InventoryManager : MonoBehaviour
 {
-
-
     private List<Collectible> collectibles;
 
     private float totalCost = 0f;
@@ -16,7 +14,6 @@ public class InventoryManager : MonoBehaviour
     public TextMeshProUGUI totalValueText;
 
     public static InventoryManager instance { get; private set; }
-
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -27,6 +24,7 @@ public class InventoryManager : MonoBehaviour
         instance = this;
         collectibles = new List<Collectible>();
     }
+
 
     public bool AddCollectible(Collectible collectible)
     {
@@ -55,6 +53,23 @@ public class InventoryManager : MonoBehaviour
     {
         totalCostText.SetText("$" + (float)Mathf.Round(cost * 100f) / 100f);
         totalValueText.SetText("" + value);
+    }
+
+    public bool HasUnpurchasedCollectible()
+    {
+        foreach (Collectible c in collectibles)
+        {
+            if (!c.isPurchased) return true;
+        }
+        return false;
+    }
+
+    public void PurchaseAllItems()
+    {
+        foreach(Collectible c in collectibles)
+        {
+            c.isPurchased = true;
+        }
     }
 
 

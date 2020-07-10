@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +8,11 @@ using UnityEngine.UI;
 public class InventorySlot : MonoBehaviour
 {
 
+    public int x;
+    public int y;
+
     public InventoryManager parent { get; private set; }
+    public bool seesCollectible { get; private set; }
     private Image image;
 
     private GameObject placedCollectible;
@@ -21,13 +26,7 @@ public class InventorySlot : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("inventory slot collision with:" + other.gameObject.name);
-
-
-        //Vector3 originalPosition = other.transform.position;
-        //Vector3 movePosition = new Vector3(originalPosition.x, originalPosition.y + 10f, originalPosition.z);
-        //other.gameObject.transform.position = movePosition;
-
+        seesCollectible = true;
         image.color = Color.gray;
     }
 
@@ -38,11 +37,14 @@ public class InventorySlot : MonoBehaviour
         {
             if (!other.GetComponent<DragAndDrop3D>().mouseDrag && other.GetComponent<Collectible>() != null)
             {
-                parent.AddCollectible(other.GetComponent<Collectible>());
-                placedCollectible = other.gameObject;
+                if (other.GetComponent<Collectible>().width == 1 && other.GetComponent<Collectible>().height == 1)
+                {
+                    parent.AddCollectible(other.GetComponent<Collectible>());
+                    placedCollectible = other.gameObject;
 
-                Vector3 snap = transform.position;
-                placedCollectible.transform.position = snap;
+                    Vector3 snap = transform.position;
+                    placedCollectible.transform.position = snap;
+                }
             }
         }
         catch (System.NullReferenceException)
@@ -54,13 +56,8 @@ public class InventorySlot : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-
-        //Vector3 originalPosition = other.transform.position;
-        //Vector3 movePosition = new Vector3(originalPosition.x, originalPosition.y - 10f, originalPosition.z);
-        //other.gameObject.transform.position = movePosition;
-
+        seesCollectible = false;
         image.color = Color.white;
-
         placedCollectible = this.gameObject;
     }
 
