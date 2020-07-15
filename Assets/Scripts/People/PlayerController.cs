@@ -30,7 +30,7 @@ public class PlayerController : People
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         // Get axis input for movement.
         Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
@@ -43,7 +43,12 @@ public class PlayerController : People
     private void FixedUpdate()
     {
         // Move the object based on the movement input
-        rigidBody.MovePosition(rigidBody.position + moveVelocity * Time.fixedDeltaTime);
+        //rigidBody.MovePosition(rigidBody.position + moveVelocity * Time.fixedDeltaTime);
+        if (isMoving)
+        {
+            rigidBody.MovePosition(rigidBody.position + moveVelocity * Time.fixedDeltaTime);
+            //rigidBody.MovePosition(moveVelocity * Time.fixedDeltaTime);
+        }
 
     }
 

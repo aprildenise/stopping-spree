@@ -5,17 +5,22 @@ using UnityEngine;
 public abstract class People : MonoBehaviour
 {
 
+
+    [Header("People")]
+    public SpriteRenderer[] toFlip;
+    public Animator anim;
+
+
+    // For movement functions and calculations.
     public bool isExposed { get; protected set; }
     public bool isMoving { get; protected set; }
     public bool isDiagonal { get; protected set; }
     public Vector3 moveVelocity { get; protected set; }
-    public SpriteRenderer flip1;
-    public SpriteRenderer flip2;
-    protected Animator anim;
+
+
 
     protected void Start()
     {
-        anim = GetComponent<Animator>();
         OnStart();
     }
 
@@ -27,6 +32,8 @@ public abstract class People : MonoBehaviour
     protected void LateUpdate()
     {
 
+        OnLateUpdate();
+
         if (isMoving)
         {
             SplatMapController.instance.SetTile(transform.position);
@@ -37,13 +44,17 @@ public abstract class People : MonoBehaviour
         {
             if (moveVelocity.x < 0)
             {
-                flip1.flipX = true;
-                flip2.flipX = true;
+                foreach (SpriteRenderer flip in toFlip)
+                {
+                    flip.flipX = true;
+                }
             }
             else if (moveVelocity.x > 0)
             {
-                flip1.flipX = false;
-                flip2.flipX = false;
+                foreach (SpriteRenderer flip in toFlip)
+                {
+                    flip.flipX = false;
+                }
             }
         } catch (System.Exception)
         {
@@ -56,7 +67,7 @@ public abstract class People : MonoBehaviour
         anim.SetFloat("vertical", moveVelocity.z);
 
 
-        OnLateUpdate();
+        
     }
 
     protected virtual void OnLateUpdate()

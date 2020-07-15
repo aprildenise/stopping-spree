@@ -6,23 +6,33 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class NPC : People
 {
-    private NavMeshAgent agent;
-
+    
+    [Header("NPC")]
     public Store currentStore;
     public Collectible currentCollectible;
+    public float timeout;
+    public Vector3 target;
     private float originalSpeed;
+
+    // State controls.
     private readonly string chooseStoreState = "ChooseStore";
     private readonly string toStoreState = "ToStore";
     private readonly string chooseCollectibleState = "ChooseCollectible";
     private readonly string toCollectibleState = "ToCollectible";
     private readonly string chooseInteractState = "chooseInteract";
     private string currentState;
-    
-    public Vector3 target;
+
+    private NavMeshAgent agent;
+    private Timer timeoutTimer;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        timeoutTimer = gameObject.AddComponent<Timer>();
+        timeoutTimer.SetTimer(timeout);
+        timeoutTimer.allowUnscaledDeltaTime = true;
+        timeoutTimer.StartTimer();
+
         originalSpeed = agent.speed;
         currentState = chooseStoreState;
     }
@@ -31,9 +41,24 @@ public class NPC : People
     {
 
         isMoving = !agent.isStopped;
+        moveVelocity = agent.velocity;
+        Debug.Log(moveVelocity);
+        isDiagonal = (moveVelocity.z > 0 && moveVelocity.x < 0)
+            || (moveVelocity.z > 0 && moveVelocity.x > 0)
+            || (moveVelocity.z < 0 && moveVelocity.x < 0)
+            || (moveVelocity.z < 0 && moveVelocity.x > 0);
 
         Debug.Log(agent.isStopped + ":" + gameObject.name);
 
+        // Timeout the NPC if the agent seems stuck somewhere.
+        if ((currentState.Equals(toStoreState) || currentState.Equals(toCollectibleState))
+            && timeoutTimer.GetStatus() == Timer.Status.FINISHED)
+        {
+            currentState = chooseStoreState;
+            timeoutTimer.StartTimer();
+        }
+
+        // Choose what to do based on the current state this NPC is in.
         if (currentState.Equals(chooseStoreState))
         {
             OnChooseStore();
@@ -87,7 +112,7 @@ public class NPC : People
     {
 
         agent.ResetPath();
-        int enterOrLeave = Random.Range(0, 100);
+        int enterOrLeave = Random.Range(0, 101);
         if (enterOrLeave < 100)
         {
             currentState = chooseCollectibleState;
@@ -105,7 +130,7 @@ public class NPC : People
             currentState = chooseStoreState;
             return;
         }
-        int stayOrLeave = Random.Range(0, 100);
+        int stayOrLeave = Random.Range(0, 101);
         if (stayOrLeave < 100)
         {
             currentCollectible = currentStore.GetTargetCollectible();
@@ -135,7 +160,7 @@ public class NPC : People
     {
         if (currentCollectible != null)
         {
-            int takeOrThrow = Random.Range(0, 100);
+            int takeOrThrow = Random.Range(0, 101);
             if (takeOrThrow < 100)
             {
                 currentStore.RemoveCollectible(currentCollectible);
