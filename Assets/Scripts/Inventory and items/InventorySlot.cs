@@ -7,58 +7,57 @@ using UnityEngine.UI;
 [RequireComponent(typeof(BoxCollider))]
 public class InventorySlot : MonoBehaviour
 {
-
+    public Color occupiedColor;
+    public Color overlappingColor;
+    public Color defaultColor;
     public int x;
     public int y;
 
+    public static readonly float slotSize = 9;
     public InventoryManager parent { get; private set; }
-    public bool seesCollectible { get; private set; }
+
+    /// <summary>
+    /// Image component of this sprite to change the colors dynamically.
+    /// </summary>
     private Image image;
 
-    private GameObject placedCollectible;
+    [HideInInspector] public GameObject occupyingObject;
 
-    private void Start()
+    private void Awake()
     {
+        // Set the components.
         image = GetComponent<Image>();
+        image.color = defaultColor;
         parent = transform.parent.transform.parent.GetComponent<InventoryManager>();
-        placedCollectible = this.gameObject;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        seesCollectible = true;
-        image.color = Color.gray;
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-
-        try
-        {
-            if (!other.GetComponent<DragAndDrop3D>().mouseDrag && other.GetComponent<Collectible>() != null)
-            {
-                if (other.GetComponent<Collectible>().width == 1 && other.GetComponent<Collectible>().height == 1)
-                {
-                    parent.AddCollectible(other.GetComponent<Collectible>());
-                    placedCollectible = other.gameObject;
-
-                    Vector3 snap = transform.position;
-                    placedCollectible.transform.position = snap;
-                }
-            }
-        }
-        catch (System.NullReferenceException)
-        {
-
-        }
+        // If there is no object in this slot, turn blue. If there is, turn overlappingColor
+        if (occupyingObject == null) image.color = occupiedColor;
+        else image.color = overlappingColor;
+        
     }
 
 
     private void OnTriggerExit(Collider other)
     {
-        seesCollectible = false;
-        image.color = Color.white;
-        placedCollectible = this.gameObject;
+        // If the object that exited was the occupyingObject, become unoccupied.
+        if (other.gameObject.Equals(occupyingObject))
+        {
+            occupyingObject = null;
+            
+        }
+
+        // If the object that exited was something else, default to occupied if occupied, or default if unoccupied.
+        if (occupyingObject == null)
+        {
+            image.color = defaultColor;
+        }
+        else
+        {
+            image.color = occupiedColor;
+        }
     }
 
 

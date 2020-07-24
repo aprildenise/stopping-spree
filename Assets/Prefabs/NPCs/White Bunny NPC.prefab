@@ -1134,7 +1134,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 10
   m_Acceleration: 2
   avoidancePriority: 50
   m_AngularSpeed: 0
@@ -1176,6 +1176,7 @@ MonoBehaviour:
   anim: {fileID: 3336798248544463416}
   currentStore: {fileID: 0}
   currentCollectible: {fileID: 0}
+  timeout: 0
   target: {x: 0, y: 0, z: 0}
 --- !u!54 &3336798248544463423
 Rigidbody:

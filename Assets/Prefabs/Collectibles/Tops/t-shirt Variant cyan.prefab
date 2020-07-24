@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &9159668919437768747
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1234127327374799902, guid: d46be289bb083d143b358da9c147115c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234127327374799902, guid: d46be289bb083d143b358da9c147115c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234127327374799902, guid: d46be289bb083d143b358da9c147115c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234127327374799902, guid: d46be289bb083d143b358da9c147115c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234127327374799902, guid: d46be289bb083d143b358da9c147115c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234127327374799902, guid: d46be289bb083d143b358da9c147115c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234127327374799902, guid: d46be289bb083d143b358da9c147115c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234127327374799902, guid: d46be289bb083d143b358da9c147115c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234127327374799902, guid: d46be289bb083d143b358da9c147115c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234127327374799902, guid: d46be289bb083d143b358da9c147115c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234127327374799902, guid: d46be289bb083d143b358da9c147115c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021777471490585689, guid: d46be289bb083d143b358da9c147115c,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -8424330737157749285, guid: 5a79ea9e090533843a767b4096d2c806,
+        type: 3}
+    - target: {fileID: 4697746542869015091, guid: d46be289bb083d143b358da9c147115c,
+        type: 3}
+      propertyPath: m_Name
+      value: t-shirt Variant cyan
+      objectReference: {fileID: 0}
+    - target: {fileID: 6326857981244391270, guid: d46be289bb083d143b358da9c147115c,
+        type: 3}
+      propertyPath: itemName
+      value: cyan t-shirt
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d46be289bb083d143b358da9c147115c, type: 3}

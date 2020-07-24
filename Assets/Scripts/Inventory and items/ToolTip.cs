@@ -8,7 +8,7 @@ public class ToolTip : MonoBehaviour
 {
 
     public CanvasGroup group;
-    public Image image;
+    public Image itemImage;
     public TextMeshProUGUI itemCost;
     public TextMeshProUGUI itemValue;
     public TextMeshProUGUI itemName;
@@ -27,11 +27,13 @@ public class ToolTip : MonoBehaviour
         }
         instance = this;
         rect = GetComponent<RectTransform>();
+        SetAlpha(0);
     }
 
     public void SetToolTip(Sprite sprite, float cost, float value, string name, string description)
     {
-        image.sprite = sprite;
+        itemImage.sprite = sprite;
+        //itemImage.SetNativeSize();
         itemCost.SetText(cost + "");
         itemValue.SetText(value + "");
         itemName.SetText(name);

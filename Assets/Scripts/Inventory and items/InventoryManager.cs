@@ -30,12 +30,18 @@ public class InventoryManager : MonoBehaviour
     {
         if (collectibles.Contains(collectible)) return false;
 
+        // Update the values of the collectible and the inventory.
         collectibles.Add(collectible);
         totalCost += collectible.cost;
         totalValue += collectible.value;
         collectible.isExposed = true;
         collectible.inInventory = true;
         UpdateText(totalCost, totalValue);
+
+        // Fix the sorting layer of the collectible sprite so that it doesn't overlap with anything.
+        collectible.sprite.sortingOrder = 11;
+
+        // All good!
         return true;
     }
 
@@ -46,6 +52,9 @@ public class InventoryManager : MonoBehaviour
         totalValue -= collectible.value;
         collectible.inInventory = false;
         UpdateText(totalCost, totalValue);
+
+        collectible.follow.enabled = false;
+
         return true;
     }
 
